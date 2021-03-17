@@ -1,65 +1,96 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
 export default function Home() {
+  const client = new ApolloClient({
+    cache: new InMemoryCache(),
+    uri: "http://localhost:23306/graphql",
+    // uri: 'http://121.0.123.233:23306/graphql'
+  });
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+    <ApolloProvider client={client}>
+      <div className='navbar-wrapper'>
+        <nav className='navbar navbar-expand'>
+          <div className='navbar-inner'>
+            <div className='navbar-nav'>
+              <Link href='/'>
+                <a className='navbar-brand'></a>
+                {/* <Image className='fapply_logo' src='../public/fapply_logo.svg' alt='fapply_logo' /> */}
+              </Link>
+              <li className='nav-item'>
+                <Link href='/recruitment'>
+                  <a className='nav-link'>채용공고</a>
+                </Link>
+              </li>
+              <li className='nav-item'>
+                <Link href='/career'>
+                  <a className='navbar-link'>커리어</a>
+                </Link>
+              </li>
+              {/* {loginInfo.userType === 0 || loginInfo.userType === -1 ? (
+                <>
+                  <li className='nav-item'>
+                    <Link to={"/calendar"} className='nav-link'>
+                      채용달력
+                    </Link>
+                  </li>
+                  <li className='nav-item'>
+                    <Link to={`/resume/${loginInfo.uid}`} className='nav-link'>
+                      이력서
+                    </Link>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className='nav-item'>
+                    <Link to={"/headhunting"} className='nav-link'>
+                      인재검색/채용제안
+                    </Link>
+                  </li>
+                  <li className='nav-item'>
+                    <Link to={"/recriutmanage"} className='nav-link'>
+                      채용공고관리
+                    </Link>
+                  </li>
+                </>
+              )} */}
+            </div>
+            <div className='utility'>
+              {/* <button className="signin-btn" onClick={toggleSigninPopup}> */}
+              {/* {loginInfo.isSuccess ? (
+                `${loginInfo.uid.substr(0, loginInfo.uid.indexOf("@"))}님 `
+              ) : (
+                <button className='signin-btn' onClick={toggleSigninPopup}>
+                  로그인/회원가입
+                </button>
+              )} */}
+              {/* </button> */}
+              {/* {loginInfo.isSuccess ? (
+                <Link to={`/mypage/${loginInfo.uid}`} className='nav-link'>
+                  마이페이지
+                </Link>
+              ) : null} */}
+              {/* <Link to={'/mypage'} className="nav-link">
+              마이페이지
+            </Link> */}
+              <button className='business-btn'>기업페이지</button>
+            </div>
+          </div>
+        </nav>
+        {/* {showPopup ? <SignInComponent closePopup={toggleSigninPopup} setLoginInfo={setLoginInfo} /> : null} */}
+        {/* <Switch>
+          <Route exact path='/' component={MainComponent} />
+          <Route exact path='/recruitment' component={RecruitmentComponent} />
+          <Route exact path='/career' component={Career} />
+          <Route exact path='/calendar' component={Calendar} />
+          <Route exact path='/resume/:uid' component={Resume} />
+          <Route exact path='/mypage/:uid' component={MyPageComponent} />
+          <Route exact path='/headhunting' component={HeadhuntingComponent} />
+        </Switch> */}
+      </div>
+    </ApolloProvider>
+  );
 }
